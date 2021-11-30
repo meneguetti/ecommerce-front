@@ -1,8 +1,9 @@
+import "./../App.css";
 import React, { useEffect, useState } from "react";
 import RenderProducts from "./RenderProducts";
 import PaginationMui from "@mui/material/Pagination";
 
-function Pagination() {
+function Ecommerce() {
     const [data, setData] = useState([]);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,12 +22,16 @@ function Pagination() {
     if (data.data !== undefined) {
         return (
             <>
-                <RenderProducts products={data.data} />
-                <PaginationMui
-                    count={data.last_page}
-                    color="primary"
-                    onChange={paginationChange}
-                />
+                <div className="App">
+                    <header className="App-header">
+                        <RenderProducts products={data.data} />
+                        <PaginationMui
+                            count={data.last_page}
+                            color="primary"
+                            onChange={paginationChange}
+                        />
+                    </header>
+                </div>
             </>
         );
     } else {
@@ -34,4 +39,4 @@ function Pagination() {
     }
 }
 
-export default Pagination;
+export default Ecommerce;
