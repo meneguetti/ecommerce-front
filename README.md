@@ -7,8 +7,11 @@
 - node v16.13.0
 - npm 8.1.0
 
-# Installation    
+# Envs
+- cp .env.example .env
+  - change the variables in .env according to your needs
 
+# Installation    
 - npm install
 - npm start
 
