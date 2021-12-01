@@ -7,7 +7,7 @@ function Product(props) {
         <div className="product card card-body" key={props.index}>
             <div className="product-image">
                 <img
-                    src={"http://localhost/images/" + props.product.thumbnail}
+                    src={process.env.REACT_APP_API_URL + "/images/" + props.product.thumbnail}
                     alt={props.product.name}
                 />
             </div>
