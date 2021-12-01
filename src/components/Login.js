@@ -12,11 +12,35 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Footer from "./Footer";
 import { Navigate } from "react-router-dom";
+import { Snackbar, Alert as AlertMui } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function AlertMui(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const theme = createTheme();
 
 export default function Login() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [message, setMessage] = React.useState("");
+    const [open, setOpen] = React.useState(false);
+
+    // handle for login failed
+    const handleClick = (message) => {
+        setMessage(message);
+        setOpen(true);
+    };
+
+    // handle for login failed 2
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     if (isLoggedIn) {
         return <Navigate to="/ecommerce" />;
@@ -41,7 +65,7 @@ export default function Login() {
             headers: {
                 "Content-Type": "application/json;",
                 Accept: "application/json;",
-                "Allow-Control-Allow-Origin": "http://localhost:3000/",
+                "Allow-Control-Allow-Origin": process.env.REACT_APP_FRONT_URL,
             },
             body: JSON.stringify({
                 email: data.get("email"),
@@ -49,9 +73,11 @@ export default function Login() {
             }),
         };
 
-        return fetch("http://localhost/api/login", requestOptions)
+        return fetch(process.env.REACT_APP_API_URL + "/api/login", requestOptions)
             .then((response) => response.json())
-            .then((data) => (data.success ? performLogin(data) : false));
+            .then((data) =>
+                data.success ? performLogin(data) : handleClick(message)
+            );
     };
 
     return (
@@ -116,6 +142,21 @@ export default function Login() {
                     </Box>
                 </Box>
                 <Footer sx={{ mt: 8, mb: 4 }} />
+                <Stack spacing={2} sx={{ width: "100%" }}>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                    >
+                        <Alert
+                            onClose={handleClose}
+                            severity="error"
+                            sx={{ width: "100%" }}
+                        >
+                           Login failed!
+                        </Alert>
+                    </Snackbar>
+                </Stack>
             </Container>
         </ThemeProvider>
     );

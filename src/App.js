@@ -7,12 +7,13 @@ import Ecommerce from "./components/Ecommerce";
 import Cart from "./components/Cart";
 import Logout from "./components/Logout";
 import Checkout from "./components/Checkout";
+
 import * as React from "react";
 
 export default function App() {
     const token = localStorage.getItem("accessToken");
-
     var path = useLocation().pathname;
+    console.log(process.env.REACT_APP_API_URL);
 
     if (!token) {
         // guest
@@ -21,7 +22,12 @@ export default function App() {
         }
     } else {
         // user (logged in)
-        if (path !== "/ecommerce" && path !== "/cart" && path !== "/logout" && path !== "/checkout") {
+        if (
+            path !== "/ecommerce" &&
+            path !== "/cart" &&
+            path !== "/logout" &&
+            path !== "/checkout"
+        ) {
             return <Navigate to="/ecommerce" />;
         }
     }

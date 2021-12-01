@@ -8,12 +8,12 @@ function Cart() {
 
     useEffect(() => {
         // get cart products
-        fetch("http://localhost/api/cart/products", {
+        fetch(process.env.REACT_APP_API_URL + "/api/cart/products", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json;",
                 Accept: "application/json;",
-                "Allow-Control-Allow-Origin": "http://localhost:3000/",
+                "Allow-Control-Allow-Origin": process.env.REACT_APP_FRONT_URL,
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
             },
         })

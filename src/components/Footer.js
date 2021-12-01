@@ -11,7 +11,7 @@ function Footer(props) {
             {...props.sx}
         >
             {"Copyright © "}
-            <Link color="inherit" href="http://localhost:3000">
+            <Link color="inherit" href={process.env.REACT_APP_FRONT_URL}>
                 Ecommerce
             </Link>{" "}
             {new Date().getFullYear()}

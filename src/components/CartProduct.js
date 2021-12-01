@@ -7,7 +7,7 @@ function CartProduct(props) {
         <div className="cart-product row no-gutters py-2" key={props.index}>
             <div className="product-image col-sm-2 p-2">
                 <img
-                    src={"http://localhost/images/" + props.product.thumbnail}
+                    src={process.env.REACT_APP_API_URL + "/images/" + props.product.thumbnail}
                     alt={props.product.name}
                 />
             </div>

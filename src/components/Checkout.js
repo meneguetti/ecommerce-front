@@ -60,13 +60,13 @@ function Checkout() {
             headers: {
                 "Content-Type": "application/json;",
                 Accept: "application/json;",
-                "Allow-Control-Allow-Origin": "http://localhost:3000/",
+                "Allow-Control-Allow-Origin": process.env.REACT_APP_FRONT_URL,
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
             },
             body: JSON.stringify({ checkout: true }),
         };
 
-        fetch("http://localhost/api/cart/checkout", postRequestOptions)
+        fetch(process.env.REACT_APP_API_URL + "/api/cart/checkout", postRequestOptions)
             .then((response) => response.json())
             .then((json) => setMessage(renderCheckout(json)));
     }, []);

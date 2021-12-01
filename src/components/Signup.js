@@ -41,7 +41,7 @@ export default function SignUp() {
             headers: {
                 "Content-Type": "application/json;", // Your headers
                 Accept: "application/json;", // Your headers
-                "Allow-Control-Allow-Origin": "http://localhost:3000/",
+                "Allow-Control-Allow-Origin": process.env.REACT_APP_FRONT_URL,
             },
             body: JSON.stringify({
                 fullname: data.get("fullname"),
@@ -50,11 +50,11 @@ export default function SignUp() {
             }),
         };
 
-        fetch("http://localhost/api/register", requestOptions)
+        fetch(process.env.REACT_APP_API_URL + "/api/register", requestOptions)
             .then((response) => response.json())
             .then((data) => (data.success ? performLogin(data) : false));
 
-            return <Navigate to="/ecommerce" />;    
+        return <Navigate to="/ecommerce" />;
     };
 
     return (

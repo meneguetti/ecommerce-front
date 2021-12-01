@@ -15,17 +15,17 @@ function Ecommerce() {
     // call page of products when clicked in pagination or 1st page when first loaded
     useEffect(() => {
         // get paginated products
-        fetch("http://localhost/api/products?page=" + currentPage)
+        fetch(process.env.REACT_APP_API_URL + "/api/products?page=" + currentPage)
             .then((response) => response.json())
             .then((json) => setData(json));
 
         // get cart products
-        fetch("http://localhost/api/cart/products", {
+        fetch(process.env.REACT_APP_API_URL + "/api/cart/products", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json;",
                 Accept: "application/json;",
-                "Allow-Control-Allow-Origin": "http://localhost:3000/",
+                "Allow-Control-Allow-Origin": process.env.REACT_APP_FRONT_URL,
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
             },
         })

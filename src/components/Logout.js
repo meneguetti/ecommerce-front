@@ -20,12 +20,12 @@ function Logout() {
             headers: {
                 "Content-Type": "application/json;",
                 Accept: "application/json;",
-                "Allow-Control-Allow-Origin": "http://localhost:3000/",
+                "Allow-Control-Allow-Origin": process.env.REACT_APP_FRONT_URL,
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
             },
         };
 
-        fetch("http://localhost/api/auth/logout", postRequestOptions)
+        fetch(process.env.REACT_APP_API_URL + "/api/auth/logout", postRequestOptions)
             .then((response) => response.json())
             .then((json) =>
                 json.success !== undefined
