@@ -2,35 +2,55 @@ import "./../App.css";
 import React, { useEffect, useState } from "react";
 import RenderProducts from "./RenderProducts";
 import PaginationMui from "@mui/material/Pagination";
+import Header from "./Header";
+import { CountProvider } from "./CountProvider";
 
 function Ecommerce() {
     const [data, setData] = useState([]);
-
     const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState(-1);
 
     // call page of products when clicked in pagination or 1st page when first loaded
     useEffect(() => {
+        // get paginated products
         fetch("http://localhost/api/products?page=" + currentPage)
             .then((response) => response.json())
             .then((json) => setData(json));
+
+        // get cart products
+        fetch("http://localhost/api/cart/products", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json;",
+                Accept: "application/json;",
+                "Allow-Control-Allow-Origin": "http://localhost:3000/",
+                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => setCount(json.total_quantity));
+
     }, [currentPage]);
 
     const paginationChange = (event, page) => {
         setCurrentPage(page);
     };
 
-    if (data.data !== undefined) {
+    if (data.data !== undefined && count > -1) {
         return (
             <>
                 <div className="App">
-                    <header className="App-header">
-                        <RenderProducts products={data.data} />
-                        <PaginationMui
-                            count={data.last_page}
-                            color="primary"
-                            onChange={paginationChange}
-                        />
-                    </header>
+                    <CountProvider initialCount={count}>
+                        <Header />
+                        <header className="App-header">
+                            <RenderProducts products={data.data} />
+                            <PaginationMui
+                                count={data.last_page}
+                                color="primary"
+                                onChange={paginationChange}
+                            />
+                        </header>
+                    </CountProvider>
                 </div>
             </>
         );

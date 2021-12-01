@@ -4,6 +4,7 @@ import { useLocation, Routes, Route, Navigate } from "react-router-dom";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Ecommerce from "./components/Ecommerce";
+import Cart from "./components/Cart";
 import * as React from "react";
 
 export default function App() {
@@ -18,7 +19,7 @@ export default function App() {
         }
     } else {
         // logged in
-        if (path !== "/ecommerce") {
+        if (path !== "/ecommerce" && path !== "/cart") {
             return <Navigate to="/ecommerce" />;
         }
     }
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="/ecommerce" element={<Ecommerce />} />
+            <Route path="/cart" element={<Cart />} />
         </Routes>
     );
 }
