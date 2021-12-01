@@ -14,16 +14,34 @@ function countReducer(state, action) {
                     Authorization:
                         "Bearer " + localStorage.getItem("accessToken"),
                 },
-                body: JSON.stringify({ product_id: action.product.id }),
+                body: JSON.stringify({ product_id: action.product_id }),
             };
 
             fetch("http://localhost/api/cart/products", postRequestOptions)
                 .then((response) => response.json())
-                .then((json) => json);
+                .then((json) => action.place === "cart" ? window.location.reload() : json );
 
             return { count: state.count + 1 };
         }
         case "decrement": {
+            const postRequestOptions = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json;",
+                    Accept: "application/json;",
+                    "Allow-Control-Allow-Origin": "http://localhost:3000/",
+                    Authorization:
+                        "Bearer " + localStorage.getItem("accessToken"),
+                },
+            };
+
+            fetch(
+                "http://localhost/api/cart/products/" + action.product_id,
+                postRequestOptions
+            )
+                .then((response) => response.json())
+                .then((json) => action.place === "cart" ? window.location.reload() : json );
+
             return { count: state.count - 1 };
         }
         default: {

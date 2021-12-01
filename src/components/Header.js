@@ -10,6 +10,9 @@ const Header = () => {
             <Link to="/cart">
                 <CartIcon /> Cart ({count})
             </Link>
+            <Link to="/logout" className="logout">
+                Logout
+            </Link>
         </header>
     );
 };

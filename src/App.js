@@ -5,6 +5,8 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Ecommerce from "./components/Ecommerce";
 import Cart from "./components/Cart";
+import Logout from "./components/Logout";
+import Checkout from "./components/Checkout";
 import * as React from "react";
 
 export default function App() {
@@ -13,13 +15,13 @@ export default function App() {
     var path = useLocation().pathname;
 
     if (!token) {
-        // paths to login
+        // guest
         if (path !== "/signup" && path !== "/") {
             return <Navigate to="/" />;
         }
     } else {
-        // logged in
-        if (path !== "/ecommerce" && path !== "/cart") {
+        // user (logged in)
+        if (path !== "/ecommerce" && path !== "/cart" && path !== "/logout" && path !== "/checkout") {
             return <Navigate to="/ecommerce" />;
         }
     }
@@ -30,6 +32,8 @@ export default function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="/ecommerce" element={<Ecommerce />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/checkout" element={<Checkout />} />
         </Routes>
     );
 }

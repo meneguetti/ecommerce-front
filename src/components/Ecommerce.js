@@ -4,11 +4,13 @@ import RenderProducts from "./RenderProducts";
 import PaginationMui from "@mui/material/Pagination";
 import Header from "./Header";
 import { CountProvider } from "./CountProvider";
+import { useNavigate } from "react-router";
 
 function Ecommerce() {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(-1);
+    let navigate = useNavigate();
 
     // call page of products when clicked in pagination or 1st page when first loaded
     useEffect(() => {
@@ -28,8 +30,11 @@ function Ecommerce() {
             },
         })
             .then((response) => response.json())
-            .then((json) => setCount(json.total_quantity));
-
+            .then((json) =>
+                json.message !== "Unauthenticated."
+                    ? setCount(json.total_quantity)
+                    : navigate("/logout")
+            );
     }, [currentPage]);
 
     const paginationChange = (event, page) => {

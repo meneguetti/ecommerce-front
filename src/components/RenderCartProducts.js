@@ -1,13 +1,30 @@
+import { Link } from "react-router-dom";
 import CartProduct from "./CartProduct";
 
-function RenderCartProducts(props) {
-    return (
-        <>
-            <h1>My Cart</h1> 
-            <div className="container">
+function render(props) {
+    if (props.products.length === 0) {
+        return (
+            <>
+                <div className="text-center">
+                    <div className="checkout-successfull-message">
+                        <div className="jumbotron jumbotron-fluid">
+                            <div className="container">
+                                <div class="empty-cart">Empty Cart!</div>
+                                <p className="lead">
+                                    <Link to="/ecommerce">Buy now</Link>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    } else {
+        return (
+            <>
                 <div className="cart-products-wrapper justify-content-center row no-gutters py-2">
                     <div className="cart-products col-sm-9 p-3">
-                        {props.products.products.map((product, index) => {
+                        {props.products.map((product, index) => {
                             return (
                                 <CartProduct product={product} key={index} />
                             );
@@ -19,7 +36,7 @@ function RenderCartProducts(props) {
                                 Total Items
                             </div>
                             <div className="checkout-total-items-value">
-                                {props.products.total_quantity}
+                                {props.total_quantity}
                             </div>
                         </div>
                         <div className="checkout-total-price checkout-items-spacing">
@@ -28,7 +45,7 @@ function RenderCartProducts(props) {
                             </div>
                             <div className="checkout-total-price-value">
                                 {"$" +
-                                    props.products.total_price.toLocaleString(
+                                    props.total_price.toLocaleString(
                                         undefined,
                                         {
                                             minimumFractionDigits: 2,
@@ -38,21 +55,26 @@ function RenderCartProducts(props) {
                             </div>
                         </div>
                         <div className="checkout text-center checkout-items-spacing">
-                            <button
+                            <Link
+                                to="/checkout"
                                 className="btn btn-primary btn-sm"
-                                /* onClick={() =>
-                        dispatch({
-                            product: props.product,
-                            product_id: props.product.id,
-                            type: "increment",
-                        })
-                    } */
                             >
                                 Checkout
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
+            </>
+        );
+    }
+}
+
+function RenderCartProducts(props) {
+    return (
+        <>
+            <div className="cart-container">
+                <h1>My Cart</h1>
+                <div className="container">{render(props.products)}</div>
             </div>
         </>
     );

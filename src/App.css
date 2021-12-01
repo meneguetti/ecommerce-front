@@ -47,6 +47,29 @@ button.btn.btn-primary.btn-sm.mb-1 {
     padding: 20px 0 0 0;
 }
 
+a.logout {
+    float: right;
+    padding: 5px 50px;
+    color: #545b62;
+}
+
+nav.MuiPagination-root.MuiPagination-text.css-1oj2twp-MuiPagination-root {
+    margin: 30px;
+}
+
+.product.card.card-body {
+    width: 400px;
+    margin: 10px 10px;
+}
+
+span.envelope-icon {
+    padding: 10px;
+    color: blue;
+}
+
+.checkout-successfull-message {
+    margin-top: 100px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
     .App-logo {

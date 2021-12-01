@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import RenderCartProducts from "./RenderCartProducts";
 import { Link } from "react-router-dom";
+import { CountProvider } from "./CountProvider";
 
 function Cart() {
     const [products, setProducts] = useState();
@@ -24,12 +25,17 @@ function Cart() {
         return (
             <>
                 <div className="App">
-                    <header>
-                        <Link to="/ecommerce">Shop</Link>
-                    </header>
-                    <div className="cart-products">
-                        <RenderCartProducts products={products} />
-                    </div>
+                    <CountProvider initialCount={0}>
+                        <header>
+                            <Link to="/ecommerce">Shop</Link>
+                            <Link to="/logout" className="logout">
+                                Logout
+                            </Link>
+                        </header>
+                        <div className="cart-products">
+                            <RenderCartProducts products={products} />
+                        </div>
+                    </CountProvider>
                 </div>
             </>
         );

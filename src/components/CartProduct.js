@@ -1,4 +1,8 @@
+import { useCount } from "./CountProvider";
+
 function CartProduct(props) {
+    const { dispatch } = useCount();
+
     return (
         <div className="cart-product row no-gutters py-2" key={props.index}>
             <div className="product-image col-sm-2 p-2">
@@ -23,25 +27,27 @@ function CartProduct(props) {
             <div className="cart-product-decrease-increase col-sm-4 p-2 row text-right cart-product-vert-align">
                 <button
                     className="btn btn-danger btn-sm mr-2 mb-1"
-                    /* onClick={() =>
+                    onClick={() =>
                         dispatch({
                             product: props.product,
-                            product_id: props.product.id,
-                            type: "increment",
+                            product_id: props.product.product_id,
+                            type: "decrement",
+                            place: "cart",
                         })
-                    } */
+                    }
                 >
                     -
                 </button>
                 <button
                     className="btn btn-primary btn-sm mb-1"
-                    /* onClick={() =>
+                    onClick={() =>
                         dispatch({
                             product: props.product,
-                            product_id: props.product.id,
+                            product_id: props.product.product_id,
                             type: "increment",
+                            place: "cart",
                         })
-                    } */
+                    }
                 >
                     +
                 </button>
